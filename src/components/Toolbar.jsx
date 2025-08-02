@@ -137,7 +137,7 @@ const Toolbar = ({ onExportPDF, isCompiling, onResetTemplate, onClearContent, sa
                   </div>
                   <div className="pt-2 border-t border-gray-200">
                     <a 
-                      href="https://github.com/your-repo/cv-editor" 
+                      href="https://github.com/DevoRia/GetEasyCV" 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="text-blue-600 hover:text-blue-800 text-xs"
