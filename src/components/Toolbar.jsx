@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Download, HelpCircle, RotateCcw, Trash2, CheckCircle, AlertCircle, Loader } from 'lucide-react'
+import analytics from '../utils/analytics'
 
 const Toolbar = ({ onExportPDF, isCompiling, onResetTemplate, onClearContent, saveStatus }) => {
   const [showHelp, setShowHelp] = useState(false)
@@ -21,6 +22,9 @@ const Toolbar = ({ onExportPDF, isCompiling, onResetTemplate, onClearContent, sa
 
   const handleHelp = () => {
     setShowHelp(!showHelp)
+    if (!showHelp) {
+      analytics.trackHelpOpen()
+    }
   }
 
   const getSaveStatusIcon = () => {

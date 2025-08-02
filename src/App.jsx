@@ -3,6 +3,7 @@ import Editor from './components/Editor'
 import Preview from './components/Preview'
 import Toolbar from './components/Toolbar'
 import { defaultTemplate } from './templates/faangTemplate'
+import analytics from './utils/analytics'
 
 function App() {
   const [content, setContent] = useState(() => {
@@ -12,6 +13,11 @@ function App() {
   })
   const [isCompiling, setIsCompiling] = useState(false)
   const [saveStatus, setSaveStatus] = useState('saved') // 'saved', 'saving', 'error'
+
+  // Initialize Google Analytics
+  useEffect(() => {
+    analytics.init()
+  }, [])
 
   const handleContentChange = (newContent) => {
     setContent(newContent)
@@ -32,6 +38,7 @@ function App() {
       setContent(defaultTemplate)
       localStorage.setItem('cv-content', defaultTemplate)
       setSaveStatus('saved')
+      analytics.trackTemplateReset()
     }
   }
 
@@ -40,6 +47,7 @@ function App() {
       setContent('')
       localStorage.setItem('cv-content', '')
       setSaveStatus('saved')
+      analytics.trackContentClear()
     }
   }
 
@@ -74,6 +82,9 @@ function App() {
         console.log('Starting PDF generation...')
         const pdf = await html2pdf().set(opt).from(previewElement).save()
         console.log('PDF generated successfully!')
+        
+        // Track successful PDF export
+        analytics.trackCVExport('pdf')
         
         // Show success message
         alert('PDF generated successfully! Check your downloads folder.')
